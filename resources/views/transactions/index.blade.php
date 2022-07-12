@@ -28,4 +28,21 @@
             </div>
         </div>
     </form>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Transações por data</th>
+            <th scope="col">Importado em:</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($records as $record)
+            <tr>
+                <td>{{ $record->data_transacao->format('d/m/Y') }}</td>
+                <td>{{ $record->data_importacao->format('d/m/Y h:i:s') }}</td>
+            </tr>    
+          @endforeach
+        </tbody>
+      </table>
 </x-layout>

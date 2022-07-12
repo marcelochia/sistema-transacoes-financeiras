@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TransationsFormRequest;
+use App\Models\Record;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\DB;
 
@@ -10,9 +11,13 @@ class TransactionsController extends Controller
 {
     public function index()
     {
+        $records = Record::orderByDesc('data_transacao')->get();
+        
         $successMessage = session('success.message');
 
-        return view('transactions.index')->with('success', $successMessage);
+        return view('transactions.index')
+            ->with('records', $records)
+            ->with('success', $successMessage);
     }
 
     public function store(TransationsFormRequest $request)
@@ -49,7 +54,9 @@ class TransactionsController extends Controller
                                             ' já foram importadas anteriormente!');
         }
 
-        foreach ($records as $record) {
+        DB::table('registros')->insert(['data_transacao' => $dateTransaction]);
+
+        foreach ($records as $record) {    
             if (substr($record[7], 0, 10) === $dateTransaction) {
                 $transaction = new Transaction();
                 $transaction->banco_origem      = $record[0];
