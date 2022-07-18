@@ -71,8 +71,6 @@ class UsersController extends Controller
             ->where('id', '<>', $user->id)
             ->value('email');
 
-            // dd($emailExists);
-
         if (!is_null($emailExists)) {
             return to_route('users.edit', $user)
                 ->with('error.email', 'O e-mail informado já foi utilizado.');
