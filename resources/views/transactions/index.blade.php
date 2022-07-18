@@ -1,4 +1,4 @@
-<x-layout subtitle="TRANSAÇÕES FINANCEIRAS">
+<x-layout>
 
     @isset($success)
         <div class="alert alert-success">
