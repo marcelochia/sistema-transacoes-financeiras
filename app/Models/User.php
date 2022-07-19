@@ -13,32 +13,21 @@ class User extends Authenticatable
 
     protected $table = 'usuarios';
     public $timestamps = false;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password'
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'admin' => 'boolean',
     ];
+
+    public function records()
+    {
+        return $this->hasMany(Record::class);
+    }
 }

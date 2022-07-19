@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TransationsFormRequest;
 use App\Models\Record;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TransactionsController extends Controller
@@ -12,7 +13,7 @@ class TransactionsController extends Controller
     public function index()
     {
         $records = Record::orderByDesc('data_transacao')->get();
-        
+
         $successMessage = session('success.message');
 
         return view('transactions.index')
@@ -24,7 +25,7 @@ class TransactionsController extends Controller
     {
         $file = fopen($request->file('csvfile'), "r");
 
-        $records = [];
+        $lines = [];
         $dateTransaction = null;
         
         while (($data = fgetcsv($file))) {
@@ -41,7 +42,7 @@ class TransactionsController extends Controller
             }
 
             if (!$hasEmptyField) {
-                $records[] = $data;
+                $lines[] = $data;
             }
         }
 
@@ -54,20 +55,24 @@ class TransactionsController extends Controller
                                             ' já foram importadas anteriormente!');
         }
 
-        DB::table('registros')->insert(['data_transacao' => $dateTransaction]);
+        $record = new Record();
+        $record->data_transacao = $dateTransaction;
+        $record->user_id = Auth::id();
+        $record->save();
 
-        foreach ($records as $record) {    
-            if (substr($record[7], 0, 10) === $dateTransaction) {
+        foreach ($lines as $line) {    
+            if (substr($line[7], 0, 10) === $dateTransaction) {
                 $transaction = new Transaction();
-                $transaction->banco_origem      = $record[0];
-                $transaction->agencia_origem    = $record[1];
-                $transaction->conta_origem      = $record[2];
-                $transaction->banco_destino     = $record[3];
-                $transaction->agencia_destino   = $record[4];
-                $transaction->conta_destino     = $record[5];
-                $transaction->valor             = $record[6];
+                $transaction->banco_origem      = $line[0];
+                $transaction->agencia_origem    = $line[1];
+                $transaction->conta_origem      = $line[2];
+                $transaction->banco_destino     = $line[3];
+                $transaction->agencia_destino   = $line[4];
+                $transaction->conta_destino     = $line[5];
+                $transaction->valor             = $line[6];
                 $transaction->data              = $dateTransaction;
-                $transaction->hora              = substr($record[7], 11, 19);
+                $transaction->hora              = substr($line[7], 11, 19);
+                $transaction->registro_id       = $record->id;
                 $transaction->save();
             }
         }

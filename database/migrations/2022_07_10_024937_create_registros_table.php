@@ -14,8 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('registros', function (Blueprint $table) {
+            $table->id();
             $table->date('data_transacao');
             $table->timestamp('data_importacao')->useCurrent();
+            $table->foreignId('user_id')->constrained('usuarios');
         });
     }
 

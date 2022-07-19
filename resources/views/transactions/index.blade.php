@@ -32,8 +32,9 @@
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">Transações por data</th>
+            <th scope="col">Transação do dia:</th>
             <th scope="col">Importado em:</th>
+            <th scope="col">Usuário:</th>
           </tr>
         </thead>
         <tbody>
@@ -41,6 +42,7 @@
             <tr>
                 <td>{{ $record->data_transacao->format('d/m/Y') }}</td>
                 <td>{{ $record->data_importacao->format('d/m/Y h:i:s') }}</td>
+                <td>{{ $record->user->name }}</td>
             </tr>    
           @endforeach
         </tbody>

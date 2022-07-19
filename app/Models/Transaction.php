@@ -19,7 +19,13 @@ class Transaction extends Model
         'conta_destino',
         'valor',
         'data',
-        'hora'
+        'hora',
+        'registro_id'
     ];
     public $timestamps = false;
+
+    public function record()
+    {
+        return $this->belongsTo(Record::class, 'registro_id');
+    }
 }

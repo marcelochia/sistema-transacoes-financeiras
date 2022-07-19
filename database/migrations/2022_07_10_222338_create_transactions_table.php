@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('transacoes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('registro_id')->constrained('registros');
             $table->date('data');
             $table->time('hora');
             $table->string('banco_origem');
