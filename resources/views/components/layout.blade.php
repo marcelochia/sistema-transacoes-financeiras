@@ -31,7 +31,7 @@
     
     <div class="container">
         <div class="p-4 bg-dark text-white rounded-bottom">
-            <h1>Sistema de transações financeiras</h1>
+            <h1>{{env('APP_NAME')}}</h1>
         </div>
         <div class="p-2">
             {{ $slot }}
