@@ -18,7 +18,7 @@
         <div class="mb-3">
             <label for="name" class="form-label">Nome completo</label>
             <input type="text" class="form-control" name="name" id="name" 
-                value="@isset($user){{$user->name}}@endisset {{ old('name') }}" 
+                value="@isset($user){{$user->name}}@endisset" 
                 required>
         </div>
         <div class="mb-3">
