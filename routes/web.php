@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function() {
-    return to_route('login.login');
+    return to_route('login');
 });
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
