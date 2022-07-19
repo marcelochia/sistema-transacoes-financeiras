@@ -1,4 +1,5 @@
 <x-layout>
+    <h2>Transações</h2>
 
     @isset($success)
         <div class="alert alert-success">
