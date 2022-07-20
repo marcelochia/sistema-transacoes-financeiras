@@ -37,9 +37,9 @@
                 <th colspan="3">ORIGEM</th>
                 <th colspan="3">DESTINO</th>
                 <th rowspan="2">HORA</th>
-                <th rowspan="2">VALOR</th>
+                <th rowspan="2">VALOR (R$)</th>
             </tr>
-            <tr>
+            <tr class="text-center">
                 <th>BANCO</th>
                 <th>AGÊNCIA</th>
                 <th>CONTA</th>
@@ -58,7 +58,7 @@
                 <td>{{$transaction->agencia_destino}}</td>
                 <td>{{$transaction->conta_destino}}</td>
                 <td>{{$transaction->hora}}</td>
-                <td>{{$transaction->valor}}</td>
+                <td class="text-end">{{number_format($transaction->valor, 2, ',', '.')}}</td>
             </tr>
             @endforeach
         </tbody>
