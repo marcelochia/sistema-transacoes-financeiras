@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TransationsFormRequest;
 use App\Models\Record;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -86,7 +87,12 @@ class TransactionsController extends Controller
     public function details(Record $record)
     {
         $transactions = Transaction::where('registro_id', $record->id)->get();
+        $user = User::withTrashed()->where('id', $record->user_id)->first();
 
-        return view('transactions.details', compact('record', 'transactions'));
+        return view('transactions.details', [
+            'record' => $record,
+            'transactions' => $transactions,
+            'userName' => $user->name
+        ]);
     }
 }

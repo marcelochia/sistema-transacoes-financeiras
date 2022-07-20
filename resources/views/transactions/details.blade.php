@@ -22,7 +22,7 @@
                     </tr>
                     <tr>
                         <th scope="row">Importado por:</th>
-                        <td class="table-secondary">{{ $record->user->name }}</td>
+                        <td class="table-secondary">{{ $userName }}</td>
                     </tr>
                 </tbody>
             </table>
