@@ -35,7 +35,7 @@
           <tr>
             <th scope="col">Transação do dia:</th>
             <th scope="col">Importado em:</th>
-            <th scope="col">Usuário:</th>
+            <th scope="col">Ações:</th>
           </tr>
         </thead>
         <tbody>
@@ -43,7 +43,9 @@
             <tr>
                 <td>{{ $record->data_transacao->format('d/m/Y') }}</td>
                 <td>{{ $record->data_importacao->format('d/m/Y h:i:s') }}</td>
-                <td>{{ $record->user->name }}</td>
+                <td>
+                    <a href="{{route('transaction.details', $record->id)}}" class="btn btn-sm btn-primary">Detalhar</a>
+                </td>
             </tr>    
           @endforeach
         </tbody>

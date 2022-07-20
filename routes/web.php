@@ -35,4 +35,5 @@ Route::middleware(Authenticator::class)->group(function () {
     
     Route::get('/transacoes', [TransactionsController::class, 'index'])->name('transaction.index');
     Route::post('/transacoes', [TransactionsController::class, 'store'])->name('transaction.store');
+    Route::get('/transacoes/detalhes/{record}', [TransactionsController::class, 'details'])->name('transaction.details');
 });

@@ -82,4 +82,11 @@ class TransactionsController extends Controller
                                         date('d/m/Y', strtotime($dateTransaction)) . 
                                         ' importadas com sucesso!');
     }
+
+    public function details(Record $record)
+    {
+        $transactions = Transaction::where('registro_id', $record->id)->get();
+
+        return view('transactions.details', compact('record', 'transactions'));
+    }
 }
