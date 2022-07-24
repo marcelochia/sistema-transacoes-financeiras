@@ -9,6 +9,10 @@ class LoginController extends Controller
 {
     public function index()
     {
+        if (Auth::check()) {
+            return to_route('transaction.index');
+        }
+
         return view('login');
     }
 

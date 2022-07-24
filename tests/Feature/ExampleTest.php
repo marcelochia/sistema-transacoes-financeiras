@@ -16,6 +16,13 @@ class ExampleTest extends TestCase
     {
         $response = $this->get('/');
 
-        $response->assertStatus(200);
+        $response->assertStatus(302);
+    }
+
+    public function testUserNotAlowed()
+    {
+        $response = $this->get('/transacoes');
+
+        $response->assertUnauthorized();
     }
 }

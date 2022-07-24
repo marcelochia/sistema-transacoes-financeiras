@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <h3 class="text-center">Transações registradas</h2>
+    <h3 class="text-center">Transações registradas</h3>
     
     <table class="table table-bordered">
         <thead>

@@ -15,8 +15,14 @@
           <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
     
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="{{ route('transaction.index') }}" class="nav-link px-2 text-white">Transações</a></li>
-                <li><a href="{{ route('users.index') }}" class="nav-link px-2 text-white">Usuários</a></li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" role="button" aria-expanded="false">Transações</a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item"><a href="{{ route('transaction.index') }}" class="nav-link text-dark">Transações</a></li>
+                        <li class="dropdown-item"><a href="{{ route('analysis.index') }}" class="nav-link text-dark">Análise de transações suspeitas</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ route('users.index') }}" class="nav-link text-white">Usuários</a></li>
             </ul>
 
             <div class="text-end">

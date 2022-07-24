@@ -51,7 +51,7 @@
     <script>
         function deleteUser(id) {
             let ok = confirm("Deseja excluir esse usuário?");
-            let url = `/usuarios/remover`;
+            let url = '/usuarios/remover';
 
             if (ok) {
                 fetch(url, {
