@@ -9,10 +9,10 @@
     <form action="{{ route('transaction.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="mb-2">
-            <label for="csvfile" class="form-label">Selecione o arquivo CSV para realizar a importação:</label>
+            <label for="transactionfile" class="form-label">Selecione o arquivo para realizar a importação:</label>
         </div>
         <div class="mb-2">
-            <input type="file" name="csvfile" id="csvfile" class="form-control" autofocus>
+            <input type="file" name="transactionfile" id="transactionfile" class="form-control" autofocus>
         </div>
         <div class="mb-2 row">
             <div class="col-2">

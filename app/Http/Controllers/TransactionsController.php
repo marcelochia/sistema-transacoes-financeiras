@@ -6,11 +6,15 @@ use App\Http\Requests\TransationsFormRequest;
 use App\Models\Record;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Services\ReadFile;
+use GuzzleHttp\Psr7\Utils;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TransactionsController extends Controller
 {
+    public function __construct(private ReadFile $readFile) {}
+
     public function index()
     {
         $records = Record::orderByDesc('data_transacao')->get();
@@ -24,31 +28,14 @@ class TransactionsController extends Controller
 
     public function store(TransationsFormRequest $request)
     {
-        $file = fopen($request->file('csvfile'), "r");
+        $file = $request->file('transactionfile');
 
-        $lines = [];
-        $dateTransaction = null;
+        $transactions = $this->readFile->process($file);
+
+        $dateTransaction = $transactions['dateTransaction'];
+
+        $result = DB::table('transacoes')->where('data', $transactions['dateTransaction'])->first('data');
         
-        while (($data = fgetcsv($file))) {
-            if (is_null($dateTransaction)) {
-                $dateTransaction = substr($data[7], 0, 10);
-            }
-
-            $hasEmptyField = false;
-
-            for ($i=0; $i < count($data) ; $i++) { 
-                if ($data[$i] == '') {
-                    $hasEmptyField = true;
-                }
-            }
-
-            if (!$hasEmptyField) {
-                $lines[] = $data;
-            }
-        }
-
-        $result = DB::table('transacoes')->where('data', $dateTransaction)->first('data');
-
         if (!is_null($result)) {
             return to_route('transaction.index')
                 ->with('success.message', 'Transações financeiras do dia ' . 
@@ -61,18 +48,18 @@ class TransactionsController extends Controller
         $record->user_id = Auth::id();
         $record->save();
 
-        foreach ($lines as $line) {    
-            if (substr($line[7], 0, 10) === $dateTransaction) {
+        foreach ($transactions as $transactions) {    
+            if (substr($transactions[7], 0, 10) === $dateTransaction) {
                 $transaction = new Transaction();
-                $transaction->banco_origem      = $line[0];
-                $transaction->agencia_origem    = $line[1];
-                $transaction->conta_origem      = $line[2];
-                $transaction->banco_destino     = $line[3];
-                $transaction->agencia_destino   = $line[4];
-                $transaction->conta_destino     = $line[5];
-                $transaction->valor             = $line[6];
+                $transaction->banco_origem      = $transactions[0];
+                $transaction->agencia_origem    = $transactions[1];
+                $transaction->conta_origem      = $transactions[2];
+                $transaction->banco_destino     = $transactions[3];
+                $transaction->agencia_destino   = $transactions[4];
+                $transaction->conta_destino     = $transactions[5];
+                $transaction->valor             = $transactions[6];
                 $transaction->data              = $dateTransaction;
-                $transaction->hora              = substr($line[7], 11, 19);
+                $transaction->hora              = substr($transactions[7], 11, 19);
                 $transaction->registro_id       = $record->id;
                 $transaction->save();
             }
