@@ -23,7 +23,7 @@
                     <th colspan="3">DESTINO</th>
                     <th rowspan="2">DATA</th>
                     <th rowspan="2">HORA</th>
-                    <th rowspan="2">VALOR (R$)</th>
+                    <th rowspan="2">VALOR</th>
                 </tr>
                 <tr class="text-center">
                     <th>BANCO</th>
@@ -45,7 +45,7 @@
                     <td>{{$transaction->conta_destino}}</td>
                     <td>{{$transaction->data}}</td>
                     <td>{{$transaction->hora}}</td>
-                    <td>{{$transaction->valor}}</td>
+                    <td>R$ {{number_format($transaction->valor, 2, ',', '.')}}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -69,8 +69,8 @@
                     <td>{{$account->bank}}</td>
                     <td>{{$account->agency}}</td>
                     <td>{{$account->account}}</td>
-                    <td>{{$account->value}}</td>
-                    <td>{{$account->type}}</td>
+                    <td>R$ {{number_format($account->value, 2, ',', '.')}}</td>
+                    <td>@if ($account->type === 'saida') Saída @else Entrada @endif</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -92,8 +92,8 @@
                 <tr>
                     <td>{{$agency->bank}}</td>
                     <td>{{$agency->agency}}</td>
-                    <td>{{$agency->value}}</td>
-                    <td>{{$agency->type}}</td>
+                    <td>R$ {{number_format($agency->value, 2, ',', '.')}}</td>
+                    <td>@if ($agency->type === 'saida') Saída @else Entrada @endif</td>
                 </tr>
                 @endforeach
             </tbody>
