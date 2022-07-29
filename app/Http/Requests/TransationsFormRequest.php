@@ -25,14 +25,14 @@ class TransationsFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'csvfile' => ['required', 'min:0.125']
+            'transactionfile' => ['required', 'min:0.125']
         ];
     }
 
     public function messages()
     {
         return [
-            'csvfile.required' => 'O arquivo CSV não foi selecionado',
+            'transactionfile.required' => 'O arquivo não foi selecionado',
             'min' => 'O arquivo selecionado está vazio'
         ];
     }
