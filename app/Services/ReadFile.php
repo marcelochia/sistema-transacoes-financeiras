@@ -31,15 +31,9 @@ class ReadFile
                 $transactions['dateTransaction'] = substr($transaction[7], 0, 10);
             }
 
-            $hasEmptyField = false;
+            $hasEmptyField = $this->emptyField($transaction);
 
-            for ($i=0; $i < count($transaction) ; $i++) { 
-                if ($transaction[$i] == '') {
-                    $hasEmptyField = true;
-                }
-            }
-
-            if (!$hasEmptyField) {
+            if (!$hasEmptyField && $transactions['dateTransaction'] === substr($transaction[7], 0, 10)) {
                 $transactions[] = $transaction;
             }
         }
@@ -77,10 +71,25 @@ class ReadFile
 
             $transaction[] = (string)$transacao->valor;
             $transaction[] = (string)$transacao->data;
-
-            $transactions[] = $transaction;
+            
+            $hasEmptyField = $this->emptyField($transaction);
+            
+            if (!$hasEmptyField && substr($transaction[7], 0 , 10) === $transactions['dateTransaction']) {
+                $transactions[] = $transaction;
+            }
         }
 
         return $transactions;
+    }
+
+    private function emptyField(array $transaction): bool
+    {
+        for ($i=0; $i < count($transaction) ; $i++) {
+            if ($transaction[$i] === '') {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
