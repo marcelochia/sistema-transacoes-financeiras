@@ -18,7 +18,7 @@
                     </tr>
                     <tr>
                         <th scope="row">Importado em:</th>
-                        <td class="table-secondary">{{ $record->data_importacao->format('d/m/Y h:i:s') }}</td>
+                        <td class="table-secondary">{{ $record->data_importacao->format('d/m/Y H:i:s') }}</td>
                     </tr>
                     <tr>
                         <th scope="row">Importado por:</th>

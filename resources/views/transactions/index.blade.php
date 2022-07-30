@@ -42,7 +42,7 @@
           @foreach ($records as $record)
             <tr>
                 <td>{{ $record->data_transacao->format('d/m/Y') }}</td>
-                <td>{{ $record->data_importacao->format('d/m/Y h:i:s') }}</td>
+                <td>{{ $record->data_importacao->format('d/m/Y H:i:s') }}</td>
                 <td>
                     <a href="{{route('transaction.details', $record->id)}}" class="btn btn-sm btn-primary">Detalhar</a>
                 </td>
